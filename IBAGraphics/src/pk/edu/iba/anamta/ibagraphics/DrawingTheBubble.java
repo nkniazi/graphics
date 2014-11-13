@@ -1,4 +1,4 @@
-package com.example.first;
+package pk.edu.iba.anamta.ibagraphics;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,19 +9,19 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
 
-public class DrawingTheBubble extends View{
+public class DrawingTheBubble extends View {
 
-	private Bitmap bball;
-	int x ,y;
+	private Bitmap bbBall;
+	int x,y,speedX,speedY;
 
 	public DrawingTheBubble(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		bball=BitmapFactory.decodeResource(getResources(),R.drawable.b128);
+		bbBall=BitmapFactory.decodeResource(getResources(), R.drawable.b128);
 		x=0;
-		y=0; 
-		
+		y=0;
+		speedX=4;
+		speedY=4;
 		
 	}
 
@@ -29,23 +29,23 @@ public class DrawingTheBubble extends View{
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
-		Rect ourRect=new  Rect();
-		ourRect.set(0,0,canvas.getWidth(),canvas.getHeight()/2);
-		
-		Paint blue=new Paint();
+		Rect ourRect = new Rect();
+		ourRect.set(0, 0, canvas.getWidth(), canvas.getHeight()/2);
+		Paint blue = new Paint();
 		blue.setColor(Color.BLUE);
-		blue.setStyle(Paint.Style.FILL);
 		canvas.drawRect(ourRect, blue);
-		if (x <canvas.getWidth()){
-		x+=10;}else{
-			x=0;
+		if (x<0 || x>canvas.getWidth()) {
+			speedX= speedX*-1;
 		}
-		if (y <canvas.getHeight()){
-			y+=10;}else{
-				x=0;
-			}
-		canvas.drawBitmap(bball,x,y,new Paint());
+		if (y<0 || y>canvas.getHeight()) {
+			speedY= speedY*-1;
+		}
+		x+=speedX;
+		y+=speedY;
+		canvas.drawBitmap(bbBall, x, y, new Paint());
 		invalidate();
 	}
+	
+	
 
 }
